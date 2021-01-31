@@ -9,6 +9,7 @@ function loadProfile() {
         document.getElementById('createnewPostWell').classList.add('hidden');
         document.getElementById('userButtons').classList.add('hidden');
         document.getElementById('myAccountButton').classList.remove('active');
+        document.getElementById('deleteTag').classList.add('hidden');
     }
 }
 

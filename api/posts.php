@@ -110,23 +110,30 @@
             echo json_encode($response);
         }
     } elseif ($_SERVER['REQUEST_METHOD'] == "DELETE") {
-        $stmt = $db_o->prepare("SELECT photo FROM posts WHERE id = ? ;");
+        $stmt = $db_o->prepare("SELECT photo, user_id FROM posts WHERE id = ? ;");
         $stmt->bind_param("s", $_GET["postId"]);
         $stmt->execute();
-        $stmt->bind_result($photo);
+        $stmt->bind_result($photo, $postUser);
         $stmt->fetch();
 
-        $db_o1 = new DB_O();
-        $db_o1 = $db_o1->get_db();
-        $stmt1 = $db_o1->prepare("DELETE FROM posts WHERE id = ? ;");
-        $stmt1->bind_param("s", $_GET["postId"]);
-        $stmt1->execute();
-
-        $path = '/png_share_data/' .$username. '/' .$photo;
-        unlink($path);
+        if($postUser == $userID) {
+            $db_o1 = new DB_O();
+            $db_o1 = $db_o1->get_db();
+            $stmt1 = $db_o1->prepare("DELETE FROM posts WHERE id = ? ;");
+            $stmt1->bind_param("s", $_GET["postId"]);
+            $stmt1->execute();
+    
+            $path = '/png_share_data/' .$username. '/' .$photo;
+            unlink($path);
+            
+            header('Content-type: application/json');
+            echo json_encode(array("code" => 200, "message" => "Post deleted!"));
+        } else {
+            http_response_code(403);
+            header('Content-type: application/json');
+            echo json_encode(array("code" => 403, "message" => "You cannot delete other peoples posts!"));
+        }
         
-        header('Content-type: application/json');
-        echo json_encode(array("code" => 200, "message" => "Post deleted!"));
     }
 
 ?>
