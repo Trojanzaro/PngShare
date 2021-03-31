@@ -138,7 +138,7 @@ function acceptRequest(dom) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
-            document.removeChild(dom);
+            console.log(this.responseText);
             location.reload();
         }
     };

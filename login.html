@@ -10,7 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
-        if(window.localStorage.getItem("token") !== null || window.sessionStorage.getItem("token") !== null)
+        var tabOpen="login";
+        if (window.localStorage.getItem("token") !== null || window.sessionStorage.getItem("token") !== null)
             window.location.pathname = "/index.html";
     </script>
     <script src="/js/form_functions.js"></script>
@@ -24,59 +25,72 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- <div class="row" style="margin-left: 0; margin-right: 0;"> -->
-        <div class="col-md-6 col-sm-6 col-xs-7" >
-            <div class="card">
-                <div class="login-box">
-                    <div class="login-snip">
-                        <form name="credentialsForm">
-                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
-                                class="tab">Login</label> <input id="tab-2" type="radio" name="tab"
-                                class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                            <div class="login-space">
-                                <div class="login">
-                                    <div class="group"> <label for="user" class="label">E-mail</label> <input
-                                            id="email" type="email" class="input" placeholder="E-mail"> </div>
-                                    <div class="group"> <label for="pass" class="label">Password</label> <input
-                                            id="pass" type="password" class="input" data-type="password"
-                                            placeholder="Password">
-                                    </div>
-                                    <div class="group"> <input id="check" type="checkbox" class="check" checked> <label
-                                            for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                                    <div class="group"> <input type="button" class="button" value="Sign In"
-                                            onClick="signIn();"> </div>
-                                    <div id="signInErrorMessage"></div>
-                                    <div class="hr"></div>
-                                    <div class="foot"> <a href="#">Forgot Password?</a> </div>
+    <div class="col-md-6 col-sm-6 col-xs-7">
+        <div class="card">
+            <div class="login-box">
+                <div class="login-snip">
+                    <form name="credentialsForm">
+                        <input onclick="tabOpen='login';" id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
+                            class="tab">Login</label> <input onclick="tabOpen='signup';" id="tab-2" type="radio" name="tab" class="sign-up"><label
+                            for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-space">
+                            <div class="login">
+                                <div class="group"> <label for="user" class="label">E-mail</label> <input id="email"
+                                        type="email" class="input" placeholder="E-mail"> </div>
+                                <div class="group"> <label for="pass" class="label">Password</label> <input id="pass"
+                                        type="password" class="input" data-type="password" placeholder="Password">
                                 </div>
-                                <div class="sign-up-form">
-                                    <div class="group"> <label for="user" class="label">Username</label> <input
-                                            id="sign_up_user" type="text" class="input" placeholder="Your Username">
-                                    </div>
-                                    <div class="group"> <label for="pass" class="label">Password</label> <input
-                                            id="sign_up_pass" type="password" class="input" data-type="password"
-                                            placeholder="Create Password"> </div>
-                                    <div class="group"> <label for="pass" class="label">Confirm Password</label> <input
-                                            id="sign_up_pass_confirm" type="password" class="input" data-type="password"
-                                            placeholder="Confirm Password"> </div>
-                                    <div class="group"> <label for="pass" class="label">Email Address</label> <input
-                                            id="sign_up_email" type="email" class="input"
-                                            placeholder="Enter your email address">
-                                    </div>
-                                    <div class="group"> <input type="button" class="button" value="Sign Up"
-                                            onClick="signUp();"> </div>
-                                    <div id="signUpErrorMessage"></div>
-                                    <div class="hr"></div>
-                                    <div class="foot"> <label for="tab-1">Already Member?</label> </div>
-                                </div>
+                                <div class="group"> <input id="check" type="checkbox" class="check" checked> <label
+                                        for="check"><span class="icon"></span> Keep me Signed in</label> </div>
+                                <div class="group"> <input type="button" class="button" value="Sign In"
+                                        onClick="signIn();"> </div>
+                                <div id="signInErrorMessage"></div>
+                                <div class="hr"></div>
+                                <div class="foot"> <a href="#">Forgot Password?</a> </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="sign-up-form">
+                                <div class="group"> <label for="user" class="label">Username</label> <input
+                                        id="sign_up_user" type="text" class="input" placeholder="Your Username">
+                                </div>
+                                <div class="group"> <label for="pass" class="label">Password</label> <input
+                                        id="sign_up_pass" type="password" class="input" data-type="password"
+                                        placeholder="Create Password"> </div>
+                                <div class="group"> <label for="pass" class="label">Confirm Password</label> <input
+                                        id="sign_up_pass_confirm" type="password" class="input" data-type="password"
+                                        placeholder="Confirm Password"> </div>
+                                <div class="group"> <label for="pass" class="label">Email Address</label> <input
+                                        id="sign_up_email" type="email" class="input"
+                                        placeholder="Enter your email address">
+                                </div>
+                                <div class="group"> <input type="button" class="button" value="Sign Up"
+                                        onClick="signUp();"> </div>
+                                <div id="signUpErrorMessage"></div>
+                                <div class="hr"></div>
+                                <div class="foot"> <label for="tab-1">Already Member?</label> </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     <!-- </div> -->
+    <script defer>
+        var enterFunction = function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                if(tabOpen === "login") signIn() ; else signUp();
+            }
+        };
+        document.getElementById("email").addEventListener("keyup", enterFunction);
+        document.getElementById("pass").addEventListener("keyup", enterFunction);
+        document.getElementById("sign_up_user").addEventListener("keyup", enterFunction);
+        document.getElementById("sign_up_pass").addEventListener("keyup", enterFunction);
+        document.getElementById("sign_up_pass_confirm").addEventListener("keyup", enterFunction);
+        document.getElementById("sign_up_email").addEventListener("keyup", enterFunction);
+    </script>
 </body>
 
 </html>
